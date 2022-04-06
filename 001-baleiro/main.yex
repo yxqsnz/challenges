@@ -5,7 +5,7 @@ end
 
 /// Parses a CSV file into a list of lists of strings
 def parseCSV(lines)
-    lines.split("\n").map(parseCSVCol)
+	lines.split("\n").map(parseCSVCol)
 end
 
 /// collects a CSV column into a string
@@ -15,7 +15,7 @@ end
 
 /// Converts a CSV column list into a string
 def writeCSV(items)
-    items.map(writeCSVCol).join("\n")
+	items.map(writeCSVCol).join("\n")
 end
 
 type Database(file)
