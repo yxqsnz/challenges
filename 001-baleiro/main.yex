@@ -1,11 +1,75 @@
-def db = new File(".db")
+/// Split a string by `,` and return a list of strings.
+def parseCSVCol(col)
+	col.split(",")
+end
 
+/// Parses a CSV file into a list of lists of strings
 def parseCSV(lines)
-    lines.split("\n").map(fn(str) str.split(",") end)
+    lines.split("\n").map(parseCSVCol)
 end
 
+/// collects a CSV column into a string
+def writeCSVCol(col)
+	col.join(",")
+end
+
+/// Converts a CSV column list into a string
 def writeCSV(items)
-    items.map(fn(xs) xs.join(",") end).join("\n")
+    items.map(writeCSVCol).join("\n")
 end
 
+type Database(file)
+	def init(this)
+		if typeof(this.file) != File then
+			raise("Database.init: file must be a File")
+		else
+			this
+		end
+	end
 
+	def save(this, name, count, price)
+		this.file.append(writeCSVCol([name, count, price]) + "\n")
+	end
+
+	def load(this)
+		parseCSV(this.file.read())
+	end
+
+	def findPrice(this, name)
+		let
+			self(self, name, xs)
+				if xs.get(0).get(0) == name then
+					xs.get(0).get(2)
+				else
+					become self(self, name, xs.tail())
+				end
+			end
+		in
+			self(self, name, this.load())
+		end
+	end
+
+	def findCount(this, name)
+		let
+			self(self, name, xs)
+				if xs.get(0).get(0) == name then
+					xs.get(0).get(1)
+				else
+					become self(self, name, xs.tail())
+				end
+			end
+		in
+			self(self, name, this.load())
+		end
+	end
+end
+
+def readInput()
+	input("Escolha algo para fazer: [i]nserir, [l]istar, [a]char, [s]air: ")
+end
+
+def db =
+	new Database(new File(".db"))
+end
+
+raise("TODO")
