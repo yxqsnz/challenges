@@ -1,0 +1,13 @@
+def parse_csv(lines)
+    lines.split("\n")
+        .map(fn(str)
+                str.split(",")
+            end)
+end
+def write_csv(items)
+    items
+        .map(fn(xs)
+             xs.join(",")
+            end)
+        .join("\n")
+end
