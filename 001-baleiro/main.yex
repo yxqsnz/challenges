@@ -1,13 +1,11 @@
-def parseCsv(lines)
-    lines.split("\n")
-        .map(fn(str)
-                str.split(",")
-            end)
+def db = new File(".db")
+
+def parseCSV(lines)
+    lines.split("\n").map(fn(str) str.split(",") end)
 end
-def writeCsv(items)
-    items
-        .map(fn(xs)
-             xs.join(",")
-            end)
-        .join("\n")
+
+def writeCSV(items)
+    items.map(fn(xs) xs.join(",") end).join("\n")
 end
+
+
